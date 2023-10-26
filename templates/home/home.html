@@ -1,0 +1,253 @@
+
+{% extends 'base.html' %}
+
+{% block title %} Home{% endblock title %}
+{% block homeactive %} active {% endblock homeactive %}
+
+{% block css %}
+
+
+<style>
+
+  .carousel-item{
+    height: 32rem;
+    background: black;
+    color : white;
+    /*position: relative;*/
+    background-position: center;
+    background-size : cover;
+  
+  }
+  
+  .container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+   
+    padding-bottom: 50px;
+  }
+  
+  .overlay-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+   top: 0;
+   background-position: center;
+   background-size : cover;
+   opacity: 0.5;
+   filter: brightness(0.5);
+  
+  }
+  
+  .latestPost{
+    background-color: 	 #e6faff;
+  
+  }
+  
+  
+  .card{
+    transition: all 0.3s;
+  
+  }
+
+
+
+  
+  .card:hover {
+    transform : scale(1.15);
+  }
+  
+  
+  .card {
+    box-shadow: 0px 0px 20px #5d5d5d;
+    margin-bottom: 40px;
+}
+  
+
+    @media only screen and (max-width:300px){
+       
+      card-img-top{
+        height: 30%;
+        width:30%;%
+      }
+ 
+      }
+      
+      @media only screen and (min-width: 300px) and (max-width:500px) {
+       
+    
+      }
+  
+      
+      @media (min-width: 500px) and (max-width:800px) {
+       
+      }
+      
+      @media (min-width: 800px) and (max-width:1000px) {
+        
+      
+     
+      
+      }
+      
+      @media (min-width: 1000px) and (max-width:1200px) {
+      .containerc{
+        display:flex;
+      }
+     
+      }
+  
+      .latestPost{
+        background: -webkit-linear-gradient(left, #7579ff, #b224ef, orange, aquamarine);
+      
+      background-size: 400% 400%;
+      animation: gradient 8s ease-in-out infinite;
+      }
+
+      @keyframes gradient{
+        0%{
+          background-position: 0% 50%;
+      }
+      50%{
+        background-position: 100% 50%;
+      }
+      100%{
+        background-position: 0% 50%;
+      }
+      }
+  
+  </style>
+  
+  
+  
+  
+
+
+{% endblock %}
+
+{% block body %}
+    
+<div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+    <li data-bs-target="#myCarousel" data-bs-slide-to="1" class=""></li>
+    <li data-bs-target="#myCarousel" data-bs-slide-to="2" class=""></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-interval="4000" >
+      <div class="overlay-image"
+      style="background-image:url(./static/pexelb7.jpg);">
+     </div>
+
+      <div class="container text-center">
+
+          <h1  class="creative" data-text="Creative..." >Welcome To My Blogging  Website</h1>
+          <p>Blogging is good for your career. A well-executed blog sets you apart as an expert in your field. </p>
+        <a class="btn btn-lg btn-info "    href="/blog" role="button">Explore  Blogs</a>
+  
+      </div>
+    </div>
+    
+
+   
+      <div class="carousel-item " data-interval="5000" >
+        <div class="overlay-image"
+        style="background-image:url(./static/pexels5.jpg);"> </div>
+
+
+        <div class="container  text-center  ">
+
+            <h1></h1>
+            <p>The best time to act on this was decades ago. The second best time is now.</p>
+          <a class="btn btn-lg btn-info" href="/blog" role="button">Explore  Blogs</a>
+    
+        </div>
+      </div>
+
+
+
+   
+        <div class="carousel-item  text-center" data-interval="6000" >
+          <div class="overlay-image"
+          style="background-image:url(./static/pexelsb2.jpg);"> </div>
+
+          <div class="container">
+
+              <h1></h1>
+              <p>Don’t say anything online that you wouldn’t want plastered on a billboard with your face on it.</p>
+              <a class="btn btn-lg btn-info " href="/blog" role="button">Explore  Blogs</a>
+      
+          </div>
+        </div>
+    </div>
+
+
+
+    
+  <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="latestPost">
+<div class="container-fluid mt-0 mb-0">
+  <br>
+  <h1 style="color:black;  font-size: 55px;  text-align: center;  "> Latest Blogs</h1>
+  <span class="heading-underline" style="  width: 100px;
+  height: 4px;
+  background: red;
+  display: block;
+  margin: auto;"></span>
+  <br>
+
+ <div class="conatinerc" >
+   <div class="row">
+  {% for latest in blogs %}
+      <div class="col-lg-2">
+        <div class="card" >
+         <img src='/media/{{latest.image}}' class="card-img-top" />
+          <div class="card-body">
+          <h4 class="card-title" style="font-size: 20px"> {{latest.title}} </h4>
+         <!--- <p class="card-text"> {{latest.post_desc|safe|truncatechars:50}}                 </p>-->
+         <a href="/blog/{{latest.slug}}" class="card-button btn btn-primary">View Blog</a>
+            </div>
+
+        </div>
+     </div>
+    
+
+  {% endfor %}
+
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+    {% endblock %}
+
+    {% block js %} 
+
+  
+{% endblock %}

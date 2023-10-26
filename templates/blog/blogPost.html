@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+
+{% block title %} Blogpost{% endblock title %}
+{% block blogactive %} active {% endblock blogactive %}
+{% block css %}
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+
+
+body{
+
+  background-color: rgb(210, 224, 249);
+  
+
+    
+}
+
+
+.container{
+
+font-family: 'Roboto', sans-serif;
+}
+
+.main-row{
+  margin: 8%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0, .05);
+  border-radius : 0.5rem;
+}
+
+.blog-img > img{
+  width: 100%;
+  height: 100%;
+  transform: translateY(-30px);
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 8px  3px rgba(0,0,0, .3);
+}
+
+
+.blog-date span{
+  color: #962c51;
+}
+
+
+
+.blog-category span{
+  color: green;
+}
+
+ul-cls{
+  jsutify-content: center;
+}
+
+
+.ul-cls li{
+  cursor: pointer;
+}
+
+
+.blog-title > h2 {
+   font-style: normal ;
+   font-weight:400;
+}
+
+.blog-desc >p {
+  font-style: normal;
+  line-height: 2;
+}
+
+
+.main-row {
+    width: 1100px;
+    margin: 8%;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+    border-radius: 0.5rem;
+}
+
+
+@media only screen and (max-width:300px){
+  .container{
+    display: flex;
+    
+}
+
+.blog-img{
+  height:90%;
+  width:30%;
+}
+
+.blog-title{
+  padding-top: 40px;
+}
+}
+
+@media only screen and (min-width: 300px) and (max-width:500px) {
+  .container{
+    display: flex;
+    
+}
+
+.blog-img{
+  height:auto;
+  width:auto;
+}
+
+.blog-title{
+  padding-top: 40px;
+}
+}
+
+@media (min-width: 500px) and (max-width:800px) {
+  .container{
+    display: flex;
+    
+}
+
+.blog-img{
+  height:auto;
+  width:auto;
+}
+
+.blog-title{
+  padding-top: 40px;
+}
+
+}
+
+@media (min-width: 800px) and (max-width:1000px) {
+  .container{
+    display: flex;
+    
+}
+
+.blog-img{
+  height:auto;
+  width:auto;
+}
+
+.blog-title{
+  padding-top: 40px;
+}
+
+}
+
+@media (min-width: 1000px) and (max-width:1200px) {
+  .container{
+    display: flex;
+    
+}
+
+.blog-img{
+  height:auto;
+  width:auto;
+}
+
+.blog-title{
+  padding-top: 40px;
+}
+
+}
+
+
+
+
+
+
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<div class="container">
+  <div class="row main-row  p-2 " width: 45px;>
+    <div class="col-lg-4 col-md-12 col-sm-12">
+      <div class="blog-img">
+        <img src='/media/{{post.image}}' alt="nature" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 mb-2">
+          <ul class="list-group list-group-horizontal ul-cls">
+           <!--- <li class="list-group-item"><a href="{{post.Github}}"> 
+             <i class="fa-brands fa-github fa-2x"></i></a>
+             <b>Github-Code</b>
+              
+          </li>-->
+
+          
+
+
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8 col-md-12 col-sm-12">
+    <div class="blog-title mb-3">
+      
+      <h3 style="font-weight:bold;" >Topic:- {{post.title}} </h3>
+    </div>
+    <div class="blog-category mb-3">
+      <h5 style="font-weight:bold;"> {{post.category}} </h5>
+    </div>
+
+
+    <div class="blog-date mb-2">
+     
+      <h5 style="font-weight:bold;">Author :- {{post.author}} </h5>
+    </div>
+    <span class="heading-underline" style=" 
+width: auto;
+height: 4px;
+background: #192f7c;
+display: block;
+margin-left: ;"></span>
+    <div class="blog-desc mb-2">
+ <p>   {{post.post_desc|safe}}
+ </p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+ {% endblock %}
+
+ {% block js %}
+
+ <script>
+
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'image code',
+    toolbar: 'undo redo | link image | code',
+   
+    image_title: true,
+   
+    automatic_uploads: true,
+   
+    file_picker_types: 'image',
+    /* and here's our custom image picker*/
+    file_picker_callback: function (cb, value, meta) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+  
+     
+  
+      input.onchange = function () {
+        var file = this.files[0];
+  
+        var reader = new FileReader();
+        reader.onload = function () {
+          
+          var id = 'blobid' + (new Date()).getTime();
+          var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+          var base64 = reader.result.split(',')[1];
+          var blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+  
+          cb(blobInfo.blobUri(), { title: file.name });
+        };
+        reader.readAsDataURL(file);
+      };
+  
+      input.click();
+    },
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+  });
+  
+  
+  
+  
+  </script>
+
+ {% endblock %}
